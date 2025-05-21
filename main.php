@@ -1,5 +1,6 @@
 <?php
 require_once 'Password Generating.php';
+require_once 'encryption.php';
 $link = mysqli_connect('localhost', 'root', '', "finalprojectdatabase");
 $password = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -14,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $amountOfNumbers = (int)$_POST['amountOfNumbers'];
     $amountOfSymbols = (int)$_POST['amountOfSymbols'];
     $generator = new passwordGenerator($length, $includeSymbols);
+    $encoder = new AESEncryption();
     if($amountOfLowercase == 0 && $amountOfUppercase == 0 && $amountOfNumbers == 0 && $amountOfSymbols == 0) {
         echo "<p>Please select at least one character type.</p>";
         exit;
@@ -60,7 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $generator->appendNewAction('appendSpecialChars', $amountOfSymbols);
         }
         $password = $generator->generatePassword();
-        if(mysqli_query($link, "INSERT INTO passwordtable (UserService, UserPassword) VALUES ('{$ServiceName}', '{$password}'); "))
+        $result = $encoder->encrypt($password);
+        if(mysqli_query($link, "INSERT INTO passwordtable (UserService, UserPassword, PassKey) VALUES ('{$ServiceName}', '{$result}', '{$encoder->key}'); "))
         {
             echo "<p>The password have been successfuly added to the data base!</p>";
         }
