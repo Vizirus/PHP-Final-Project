@@ -1,8 +1,9 @@
 <?php
 require_once 'Password Generating.php';
-
+$link = mysqli_connect('localhost', 'root', '', "finalprojectdatabase");
 $password = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $ServiceName =  $_POST['servicename'];
     $length = isset($_POST['length']) ? (int)$_POST['length'] : 12;
     $includeUppercase = isset($_POST['uppercase']);
     $includeLowercase = isset($_POST['lowercase']);
@@ -59,7 +60,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $generator->appendNewAction('appendSpecialChars', $amountOfSymbols);
         }
         $password = $generator->generatePassword();
-        echo "<p>Your generated password is: <strong>$password</strong></p>";
+        if(mysqli_query($link, "INSERT INTO passwordtable (UserService, UserPassword) VALUES ('{$ServiceName}', '{$password}'); "))
+        {
+            echo "<p>The password have been successfuly added to the data base!</p>";
+        }
+        else{
+            echo "<p>There was an error adding the password to the database.</p>";
+            exit;
+        }
     }
     else{
         echo "<p>Please select at least one character type.</p>";
