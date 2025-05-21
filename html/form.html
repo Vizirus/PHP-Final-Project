@@ -9,28 +9,27 @@
     <body>
         <div class="container">
             <h1>Password Generator</h1>
-            <form id="password-form" method="POST" action="main.php">
+            <form id="password-form" method="POST" action="../main.php">
                 <label for="length">Password Length:</label>
                 <input type="number" id="length" name="length" min="4" max="20" value="12" required>
 
                 <label for="uppercase">Include Uppercase Letters</label>
                 <input type="checkbox" id="uppercase" name="uppercase">
+                <input type="number" id="numbers" name="includeUpperCase" min="0" max="100" value="0" checked="numberBox">
 
                 <label for="lowercase">Include Lowercase Letters</label>
                 <input type="checkbox" id="lowercase" name="lowercase">
+                 <input type="number" id="numbers" name="amountOfLowerCase" min="0" max="100" value="0" checked="numberBox">
 
                 <label for="numbers">Include Numbers</label>
-                <input type="checkbox" id="numbers" name="numbers">
+                <input type="checkbox" id="numbers" name="numberBox">
+                <input type="number" id="numbers" name="amountOfNumbers" min="0" max="100" value="0" checked="numberBox">
 
                 <label for="symbols">Include Symbols</label>
                 <input type="checkbox" id="symbols" name="symbols">
+                 <input type="number" id="numbers" name="amountOfSymbols" min="0" max="100" value="0" checked="numberBox">
 
                 <button type="submit">Generate Password</button>
             </form>
-
-            <div class="result">
-                <h2>Generated Password:</h2>
-                <p id="password"></p>
-            </div>
         </div>
 </html>
