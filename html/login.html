@@ -6,7 +6,8 @@
     <title>Login</form></title>
 </head>
 <body>
-    <form action="userOperations.php" method="POST">
+    <form action="../main.php" method="POST">
+        <input type="hidden" name="form_type" value="login">
         <h1>Login</h1>
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br><br>

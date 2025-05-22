@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Password Generator</title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Current Items</title>
+</head>
+<body>
+    <form action="../main.php" method="POST">
+        <input type="hidden" name="form_type" value="viewItems">
+        <button type="submit">View Current Items</button>
+    </form>
+        <h3>Change password form</h3>
         <div class="container">
-            <h1>Password Generator</h1>
             <form id="password-form" method="POST" action="../main.php">
-                <input type="hidden" name="form_type" value="generate">
+                <input type="hidden" name="form_type" value="changeItems">
                 <div>
                     <label for="username">Service name:</label>
                     <input type="text" id="servicename" name="servicename" required>
@@ -40,4 +43,6 @@
                 <button type="submit">Generate Password</button>
             </form>
         </div>
+
+</body>
 </html>

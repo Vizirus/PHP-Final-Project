@@ -7,7 +7,8 @@
 </head>
 <body>
     <h1>Create User</h1>
-    <form action="userOperations.php" method="POST">
+    <form action="../main.php" method="POST">
+        <input type="hidden" name="form_type" value="create">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br><br>
 
