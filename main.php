@@ -150,8 +150,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if($result == true);
         {
             echo "<div>
-                <p>The user was created successfully!</p>
                 <div>
+                    <p>The user was created successfully!</p>
                     <p>Now you have to login in order to access the functionality!</p>
                     <a href='html/login.html'>Go to the login form</a>
                 </div>

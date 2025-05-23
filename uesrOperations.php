@@ -12,7 +12,7 @@
             $query = "SELECT * FROM usertable WHERE UserName = '{$this->username}'";
             $result = mysqli_query($link, $query);
             if(!$result){
-                echo"<p>User already exists!</p>";
+                echo"<div><p>User already exists!</p></div>";
                 return false;
             }
             else{
@@ -20,10 +20,10 @@
                 $query = "INSERT INTO usertable (UserName, UserPass, UserEmail) VALUES ('{$this->username}', '{$hashedPassword}', '{$this->email}')";
                 $result = mysqli_query($link, $query);
                 if($result){
-                    echo "<p>User registered successfully!</p>";
+                    echo "<div><p>User registered successfully!</p></div>";
                 }
                 else{
-                    echo "<p>There was an error registering the user.</p>";
+                    echo "<div><p>There was an error registering the user.</p></div>";
                 }
                 return true;
     
@@ -35,16 +35,16 @@
             if($result && mysqli_num_rows($result) > 0){
                 $getPassword = mysqli_fetch_assoc($result)['UserPass'];
                 if(password_verify($this->password, $getPassword)){
-                    echo "<p>Login successful!</p>";
+                    echo "<div><p>Login successful!</p></div>";
                 }
                 else{
-                    echo "<p>Invalid password.</p>";
+                    echo "<div><p>Invalid password.</p></div>";
                     return false;
                 }
                 setcookie("user", $this->username, time() + (86400 * 30), "/");
             }
             else{
-                echo "<p>Invalid username or password.</p>";
+                echo "<div><p>Invalid username or password.</p></div>";
                 return false;
             }
             return true;
