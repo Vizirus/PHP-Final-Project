@@ -5,7 +5,7 @@ require_once 'uesrOperations.php';
 $link = mysqli_connect('localhost', 'root', '', "finalprojectdatabase");
 $password = '';
 $encoder = new AESEncryption();
-
+$userClass = new UserAuthenitication();
 function generatePassword($encoder, $link, $isUpdate = false) {
     $ServiceName =  $_POST['servicename'];
     $length = isset($_POST['length']) ? (int)$_POST['length'] : 12;
@@ -99,11 +99,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "<p>Form Type: $formType</p>";
     if($formType == 'login') {
         $cookie_name = "user";
-        $cookie_value = "John Doe";
+        $cookie_value = "$userClass->username";
         setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $userClass->setUser($username, $password, "");
+        if($userClass->loginUser($link)){
+            echo "<div>
+                <p>The user was logged in successfully!</p>
+                <div>
+                    <p>You can now generate a password!</p>
+                    <a href='html/form.html'>Go to the password generation form</a>
+                </div>
+                <div>
+                    <p>Or you can view your passwords!</p>
+                    <a href='html/viewItems.html'>Go to the view passwords form</a>
+                </div>
+            </div>";
+        }
     }
     else if($formType == 'generate') {
         generatePassword($encoder, $link, false);
+        echo "
+            <div>
+                <p>Now you can view your passwords!</p>
+                <a href='html/viewItems.html'>Go to the view passwords form</a>
+            </div>";
     }
     else if($formType == 'viewItems') {
         $query = "SELECT * FROM passwordtable";
@@ -117,11 +138,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "<p>Error retrieving passwords from the database.</p>";
         }
     }
-    else if($formType == 'create')
-    {
+    else if($formType == 'create'){
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $email = $_POST['email'];
+        $userClass->setUser($username, $password, $email);
+        $result = $userClass->registerUser($link);
+        if($result == true);
+        {
+            echo "<div>
+                <p>The user was created successfully!</p>
+                <div>
+                    <p>Now you have to login in order to access the functionality!</p>
+                    <a href='html/login.html'>Go to the login form</a>
+                </div>
+            </div>";
+        }
+
     }
     else if($formType == 'changeItems'){
         generatePassword($encoder, $link, true);
+        echo "
+            <div>
+                <p>Now you can view your passwords!</p>
+                <a href='html/viewItems.html'>Go to the view passwords form</a>
+            </div>";
     }
 }
 ?>

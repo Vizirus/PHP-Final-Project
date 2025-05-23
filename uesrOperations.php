@@ -1,44 +1,53 @@
 <?php
     class UserAuthenitication {
         private $password;
-        protected $username;
+        public $username;
         private $email;
-
-        public function __construct($password, $username, $email) {
-            $this->password = $password;
+        public function setUser($username, $password, $email) {
             $this->username = $username;
+            $this->password = $password;
             $this->email = $email;
         }
-
         public function registerUser($link) {
-            $query = "SELECT * FROM users WHERE username = '{$this->username}'";
+            $query = "SELECT * FROM usertable WHERE UserName = '{$this->username}'";
             $result = mysqli_query($link, $query);
-            if($result){
+            if(!$result){
                 echo"<p>User already exists!</p>";
-                echo '<a href="login.html">We would like you to go by this link to login form!</a>';
+                return false;
             }
             else{
-                $query = "INSERT INTO users (username, password, email) VALUES ('{$this->username}', '{$this->password}', '{$this->email}')";
+                $hashedPassword = password_hash($this->password, PASSWORD_BCRYPT);
+                $query = "INSERT INTO usertable (UserName, UserPass, UserEmail) VALUES ('{$this->username}', '{$hashedPassword}', '{$this->email}')";
                 $result = mysqli_query($link, $query);
                 if($result){
                     echo "<p>User registered successfully!</p>";
-                    echo '<a href="login.html">We would like you to go by this link to login form!</a>';
                 }
                 else{
                     echo "<p>There was an error registering the user.</p>";
                 }
-            }
+                return true;
+    
+            }      
         }
         public function loginUser($link) {
-            $query = "SELECT * FROM users WHERE username = '{$this->username}' AND password = '{$this->password}'";
+            $query = "SELECT UserPass FROM usertable WHERE UserName = '{$this->username}'";
             $result = mysqli_query($link, $query);
             if($result && mysqli_num_rows($result) > 0){
-                echo "<p>Login successful!</p>";
+                $getPassword = mysqli_fetch_assoc($result)['UserPass'];
+                if(password_verify($this->password, $getPassword)){
+                    echo "<p>Login successful!</p>";
+                }
+                else{
+                    echo "<p>Invalid password.</p>";
+                    return false;
+                }
                 setcookie("user", $this->username, time() + (86400 * 30), "/");
             }
             else{
                 echo "<p>Invalid username or password.</p>";
+                return false;
             }
+            return true;
         }
     }
 
