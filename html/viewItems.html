@@ -3,46 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
     <title>View Current Items</title>
 </head>
 <body>
-    <form action="../main.php" method="POST">
-        <input type="hidden" name="form_type" value="viewItems">
-        <button type="submit">View Current Items</button>
-    </form>
-        <h3>Change password form</h3>
-        <div class="container">
-            <form id="password-form" method="POST" action="../main.php">
-                <input type="hidden" name="form_type" value="changeItems">
+    <div>
+        <form action="../main.php" method="POST">
+            <input type="hidden" name="form_type" value="viewItems">
+            <button type="submit">View Current Items</button>
+        </form>
+            <h2>Change password form</h2>
+            <form id="password-form" method="POST" action="../main.php" id="password-form">
+                <input type="hidden" name="form_type" value="generate">
                 <div>
                     <label for="username">Service name:</label>
                     <input type="text" id="servicename" name="servicename" required>
                 </div>
                 
-                <div>
-                    <h2>Password Parameters</h2>
-                    <label for="length">Password Length:</label>
-                    <input type="number" id="length" name="length" min="4" max="20" value="12" required>
-
-                    <label for="uppercase">Include Uppercase Letters</label>
-                    <input type="checkbox" id="uppercase" name="uppercase">
-                    <input type="number" id="numbers" name="includeUpperCase" min="0" max="100" value="0" checked="numberBox">
-
-                    <label for="lowercase">Include Lowercase Letters</label>
-                    <input type="checkbox" id="lowercase" name="lowercase">
-                    <input type="number" id="numbers" name="amountOfLowerCase" min="0" max="100" value="0" checked="numberBox">
-
-                    <label for="numbers">Include Numbers</label>
-                    <input type="checkbox" id="numbers" name="numberBox">
-                    <input type="number" id="numbers" name="amountOfNumbers" min="0" max="100" value="0" checked="numberBox">
-
-                    <label for="symbols">Include Symbols</label>
-                    <input type="checkbox" id="symbols" name="symbols">
-                    <input type="number" id="numbers" name="amountOfSymbols" min="0" max="100" value="0" checked="numberBox">
+                <div id="password-parameters">
+                    <h3>Password Parameters</h3>
+                    <div>
+                        <label for="length">Password Length:</label>
+                        <input type="number" id="length" name="length" min="4" max="20" value="12" required>
+                    </div>
+                    
+                    <div>
+                        <label for="uppercase">Include Uppercase Letters</label>
+                        <input type="checkbox" id="uppercase" name="uppercase">
+                        <input type="number" id="numbers" name="includeUpperCase" min="0" max="100" value="0" checked="numberBox">
+                    </div>
+                    <div>
+                         <label for="lowercase">Include Lowercase Letters</label>
+                        <input type="checkbox" id="lowercase" name="lowercase">
+                        <input type="number" id="numbers" name="amountOfLowerCase" min="0" max="100" value="0" checked="numberBox">
+                    </div>
+                    <div>
+                        <label for="numbers">Include Numbers</label>
+                        <input type="checkbox" id="numbers" name="numberBox">
+                        <input type="number" id="numbers" name="amountOfNumbers" min="0" max="100" value="0" checked="numberBox">
+                    </div>
+                    <div>
+                         <label for="symbols">Include Symbols</label>
+                        <input type="checkbox" id="symbols" name="symbols">
+                        <input type="number" id="numbers" name="amountOfSymbols" min="0" max="100" value="0" checked="numberBox">
+                    </div>
+                   
                 </div>
                 <button type="submit">Generate Password</button>
             </form>
-        </div>
+    </div>
 
 </body>
 </html>

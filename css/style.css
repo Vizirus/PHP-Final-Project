@@ -1,0 +1,58 @@
+body{
+    background-color: hsl(0, 0%, 83%);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+div{
+    background-color: #be0735;
+    padding: 5px;
+    border-radius: 5px;
+    align-items: center;
+    text-align: center;
+    align-self:center;
+    color:antiquewhite;
+    margin: 5px;
+}
+button{
+    background-color: hsl(0, 0%, 83%);
+    color: #be0735;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px;
+}
+form{
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    display:flex;
+    margin: 0 auto;
+}
+button a{
+    text-decoration: none;
+    color: #be0735;
+}
+#createUserForm{
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#password-form{
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#password-parameters{
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

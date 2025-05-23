@@ -44,14 +44,16 @@ function generatePassword($encoder, $link, $isUpdate = false) {
         exit;
     }
     else if($includeUppercase || $includeLowercase || $includeNumbers || $includeSymbols){
-        echo "<p>Generating a password with the following parameters:</p>";
-        echo "<ul>";
-        echo "<li>Length: $length</li>";
-        echo "<li>Uppercase letters: $amountOfUppercase</li>";
-        echo "<li>Lowercase letters: $amountOfLowercase</li>";
-        echo "<li>Numbers: $amountOfNumbers</li>";
-        echo "<li>Special characters: $amountOfSymbols</li>";
-        echo "</ul>";
+
+        echo "<div><p>Generating a password with the following parameters:</p>
+            <ul>
+            <li>Length: $length</li>
+            <li>Uppercase letters: $amountOfUppercase</li>
+            <li>Lowercase letters: $amountOfLowercase</li>
+            <li>Numbers: $amountOfNumbers</li>
+            <li>Special characters: $amountOfSymbols</li>
+            </ul>
+            </div>";
         if ($includeUppercase) {
             $generator->appendNewAction('appendUpperCase', $amountOfUppercase);
         }
@@ -66,7 +68,6 @@ function generatePassword($encoder, $link, $isUpdate = false) {
         }
         $password = $generator->generatePassword();
         $result = $encoder->encrypt($password);
-        echo "<p>Generated password: $result</p>";
         $username = '';
         if(isset($_COOKIE['user'])) {
             $username = $_COOKIE['user'];
@@ -77,26 +78,25 @@ function generatePassword($encoder, $link, $isUpdate = false) {
             }
             if($queryResult)
             {
-                echo "<p>The password have been successfuly added/modified to the data base!</p>";
+                echo "<div><p>The password have been successfuly added/modified to the data base!</p></div>";
             }
             else{
-                echo "<p>There was an error adding the password to the database.</p>";
+                echo "<div><p>There was an error adding the password to the database.</p></div>";
                 exit;
             }
         }
         else{
-            echo "<p>Cookie not set.</p>";
+            echo "<div><p>Cookie not set.</p></div>";
             exit;
         }
     }
     else{
-        echo "<p>Please select at least one character type.</p>";
+        echo "<div><p>Please select at least one character type.</p></div>";
         exit;
     }
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $formType = $_POST['form_type'];
-    echo "<p>Form Type: $formType</p>";
     if($formType == 'login') {
         $cookie_name = "user";
         $cookie_value = "$userClass->username";
@@ -123,19 +123,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "
             <div>
                 <p>Now you can view your passwords!</p>
-                <a href='html/viewItems.html'>Go to the view passwords form</a>
+                <button><a href='html/viewItems.html'>Go to the view passwords form</a></button>
             </div>";
     }
     else if($formType == 'viewItems') {
         $query = "SELECT * FROM passwordtable";
         $result = mysqli_query($link, $query);
         if ($result) {
+            $resultOutput = "<div>";
             while ($row = mysqli_fetch_assoc($result)) {
                 $decryptedPassword = $encoder->decrypt($row['UserPassword'], $row['PassKey']);
-                echo "<p>Service: {$row['UserService']}, Password: {$decryptedPassword}></p>";
+                $resultOutput .= "<p>Service: {$row['UserService']}, Password: {$decryptedPassword}></p>";
             }
+            $resultOutput .= "</div>";
+            echo $resultOutput;
         } else {
-            echo "<p>Error retrieving passwords from the database.</p>";
+            echo "<div><p>Error retrieving passwords from the database.</p></div>";
         }
     }
     else if($formType == 'create'){
@@ -161,8 +164,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "
             <div>
                 <p>Now you can view your passwords!</p>
-                <a href='html/viewItems.html'>Go to the view passwords form</a>
+                <button><a href='html/viewItems.html'>Go to the view passwords form</a></button>
             </div>";
     }
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Result</title>
+</head>
+<body>
+    
+</body>
+</html>
